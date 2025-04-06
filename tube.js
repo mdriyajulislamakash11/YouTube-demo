@@ -19,6 +19,22 @@ const loadCategories = () => {
     .catch((err) => console.log(err));
 };
 
+const loadCategoryVideos = () => {
+    fetch("https://openapi.programming-hero.com/api/phero-tube/videos")
+      .then((res) => res.json())
+      .then((data) => displayCategoryVideo(data.videos))
+      .catch((error) => console.log(error));
+  };
+
+const loadCategoriesBtn = (id) =>{
+    fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${id}`)
+    .then((res) => res.json())
+    .then( (data) => {
+        displayCategoryVideo(data.category)
+        
+    })
+    .catch((error) => console.log(error))
+}  
 
 
 const displayCategoryBtn = (items) => {
@@ -29,7 +45,7 @@ const displayCategoryBtn = (items) => {
     const buttonDiv = document.createElement("div");
     buttonDiv.classList.add("btn");
     buttonDiv.innerHTML = `
-            <button clasa="btn">${item.category} </button>
+            <button id="btn-${item.category_id}" onclick="loadCategoriesBtn(${item.category_id})" clasa="btn">${item.category} </button>
 
         `;
     categoriyBtnContainer.append(buttonDiv);
@@ -37,15 +53,15 @@ const displayCategoryBtn = (items) => {
 };
 
 
-const loadCategoryVideos = () => {
-    fetch("https://openapi.programming-hero.com/api/phero-tube/videos")
-      .then((res) => res.json())
-      .then((data) => displayCategoryVideo(data.videos))
-      .catch((err) => console.log(err));
-  };
-
 const displayCategoryVideo = (videos) => {
   const CardContainer = document.getElementById("videos");
+  CardContainer.innerHTML="";
+
+  if(videos.length == 0){
+    CardContainer.innerHTML = "No Data Found"
+    return
+  }
+
 
   videos.forEach((items) => {
     const card = document.createElement("div");
