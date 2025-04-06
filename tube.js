@@ -26,11 +26,19 @@ const loadCategoryVideos = () => {
       .catch((error) => console.log(error));
   };
 
+const removeActiveClas = () => {
+    const remove = document.getElementsByClassName("")
+}
+
 const loadCategoriesBtn = (id) =>{
     fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${id}`)
     .then((res) => res.json())
     .then( (data) => {
         displayCategoryVideo(data.category)
+        removeActiveClas()
+
+        const activeBtn = document.getElementById(`btn${id}`);
+        activeBtn.classList.add("active")
         
     })
     .catch((error) => console.log(error))
@@ -39,7 +47,6 @@ const loadCategoriesBtn = (id) =>{
 
 const displayCategoryBtn = (items) => {
   const categoriyBtnContainer = document.getElementById("categoriyes");
-  console.log(categoriyBtnContainer);
 
   items.forEach((item) => {
     const buttonDiv = document.createElement("div");
@@ -88,6 +95,8 @@ const displayCategoryVideo = (videos) => {
     CardContainer.append(card)
   });
 };
+
+// search option baki ache ekhane
 
 loadCategoryVideos();
 loadCategories();
