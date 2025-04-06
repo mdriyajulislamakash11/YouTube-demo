@@ -37,5 +37,41 @@ const displayCategoryBtn = (items) => {
 };
 
 
+const loadCategoryVideos = () => {
+    fetch("https://openapi.programming-hero.com/api/phero-tube/videos")
+      .then((res) => res.json())
+      .then((data) => displayCategoryVideo(data.videos))
+      .catch((err) => console.log(err));
+  };
 
+const displayCategoryVideo = (videos) => {
+  const CardContainer = document.getElementById("videos");
+
+  videos.forEach((items) => {
+    const card = document.createElement("div");
+    card.classList.add("card", "bg-base-100", "w-96", "shadow-xl")
+    card.innerHTML = `
+    <figure>
+    <img
+      src="${items.thumbnail}"
+      alt="Shoes" />
+  </figure>
+  <div class="card-body">
+    <h2 class="card-title">
+      Shoes!
+      <div class="badge badge-secondary">NEW</div>
+    </h2>
+    <p>If a dog chews shoes whose shoes does he choose?</p>
+    <div class="card-actions justify-end">
+      <div class="badge badge-outline">Fashion</div>
+      <div class="badge badge-outline">Products</div>
+    </div>
+  </div>
+        
+    `;
+    CardContainer.append(card)
+  });
+};
+
+loadCategoryVideos();
 loadCategories();
